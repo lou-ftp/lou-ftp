@@ -1,8 +1,12 @@
 package com.enterprisedt.net.ftp.FTPClient;
+
 /**
  * Created by Dan Conradt on 7/9/2016.
  */
+
+
 import org.apache.commons.net.ftp.FTPClient;
+
 
 public class Client {
 
@@ -49,8 +53,26 @@ public class Client {
     }
 
     public static boolean openSocket() {
-       boolean result = false;
-        // do some stuff
+        boolean result = false;
+
+        try {
+            client.connect(host, port);
+            System.out.println("Connected to " + host);
+            System.out.print(client.getReplyString());
+
+            int reply = client.getReplyCode(); // check reply code.
+            if(!FTPReply.isPositiveCompletion(reply)) {
+                client.disconnect();
+                System.err.println("FTP server refused connection.");
+                System.exit(1);
+            }
+            result = true;
+        }
+        catch(IOException e){
+            System.err.println("Caught IOException: " + e.getMessage() + "\n");
+            e.printStackTrace();
+        }
+
         return result;
     }
 
@@ -79,7 +101,3 @@ public class Client {
         // disconnect
     }
 }
-
-
-
-
