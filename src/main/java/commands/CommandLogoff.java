@@ -1,3 +1,5 @@
+package commands;
+
 import org.apache.commons.net.ftp.FTPClient;
 
 import java.io.IOException;
