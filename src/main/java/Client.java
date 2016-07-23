@@ -3,6 +3,8 @@
  */
 
 
+import commands.CommandListDirectories;
+import commands.CommandLogin;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
@@ -13,8 +15,11 @@ public class Client {
 
     // Application variables
     static FTPClient client = new FTPClient();
+
     static User user = new User();
     static ConnectionInformation connInfo = new ConnectionInformation();
+    static CommandListDirectories listDir = new CommandListDirectories();
+    static CommandLogin connect = new CommandLogin();
     static String login = "";
     static String password = "";
     static String host ="";
@@ -43,6 +48,19 @@ public class Client {
             port = connInfo.getPort();
         else
             System.out.println("Invalid Data");
+        try {
+            connect.execute(client, new String[]{host, String.valueOf(port), login, password});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            client.logout();
+            client.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
