@@ -3,6 +3,8 @@
  */
 
 
+import commands.AddFileToRemoteServer;
+import commands.CommandListDirectories;
 import commands.CommandLogin;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
@@ -17,6 +19,8 @@ public class Client {
     static User user = new User();
     static ConnectionInformation connInfo = new ConnectionInformation();
     static CommandLogin connectFtp = new CommandLogin();
+    static AddFileToRemoteServer addFile = new AddFileToRemoteServer();
+    static CommandListDirectories listDir = new CommandListDirectories();
     static String login = "";
     static String password = "";
     static String host ="";
@@ -55,6 +59,16 @@ public class Client {
         else
             System.out.println("Invalid Data");
         login();
+        try {
+            addFile.execute(client);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            listDir.execute(client);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static boolean inputServer(){
