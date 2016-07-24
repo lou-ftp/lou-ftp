@@ -3,8 +3,9 @@
  */
 
 
+import commands.Command;
 import commands.CommandListDirectories;
-import commands.CommandLogin;
+import commands.CommandMkDir;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
@@ -15,15 +16,18 @@ public class Client {
 
     // Application variables
     static FTPClient client = new FTPClient();
-
     static User user = new User();
     static ConnectionInformation connInfo = new ConnectionInformation();
-    static CommandListDirectories listDir = new CommandListDirectories();
-    static CommandLogin connect = new CommandLogin();
     static String login = "";
     static String password = "";
     static String host ="";
     static int port = 0;
+
+    /**
+     *  Here are some FTP sites we can use to test:
+     *  ftp.ed.ac.uk; email is the password, port = 21
+     *  ftp.microsoft.com; user = anonymous, password = doesn't matter what you use, port = 21
+     */
 
 
     /**
@@ -36,32 +40,21 @@ public class Client {
             login = user.getLogin();
         else
             System.out.println("Invalid Data");
+
         if(user.inputPass())
             password = user.getPassword();
         else
             System.out.println("Invalid Data");
+
         if(connInfo.inputHost())
             host = connInfo.getHost();
         else
             System.out.println("Invalid Data");
+
         if(connInfo.inputPort())
             port = connInfo.getPort();
         else
             System.out.println("Invalid Data");
-        try {
-            connect.execute(client, new String[]{host, String.valueOf(port), login, password});
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            client.logout();
-            client.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
     }
 
     public static boolean inputServer(){
