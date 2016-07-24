@@ -28,8 +28,12 @@ public class ConnectionInformation {
 
     // Provide the port information
     public int getPort(){
-        int portNum = Integer.parseInt(port);
-        return portNum;
+        try {
+            return Integer.parseInt(port);
+        } catch(NumberFormatException e) {
+            System.err.println("Error with input for Port - NAN: " + e.getMessage() );
+            return -1;
+        }
     }
 
     // Get the host information from the user.
@@ -37,7 +41,7 @@ public class ConnectionInformation {
         boolean result = false;
         System.out.println("Host Name :");
         this.host = input.nextLine();
-        if(host != "")
+        if(host != null)
             result = true;
         return result;
     }
