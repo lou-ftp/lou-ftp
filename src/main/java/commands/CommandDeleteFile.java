@@ -13,16 +13,16 @@ public class CommandDeleteFile implements Command {
         // Set path to file for deletion
         String filename = args[0];
         // Set deletion confirmation
-        boolean exist = false;
+        boolean fileExists = false;
         // try to delete the file and communicate result
         try {
-            exist = client.deleteFile(filename);
+            fileExists = client.deleteFile(filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (exist)
+        if (fileExists)
             System.out.println("File "+ filename + " was deleted.");
         else
-            System.out.println("File "+ filename + " doesn't exist...");
+            System.out.println("File "+ filename + " doesn't exist.");
     }
 }
