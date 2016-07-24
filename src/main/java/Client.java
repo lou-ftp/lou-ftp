@@ -3,6 +3,9 @@
  */
 
 
+import commands.Command;
+import commands.CommandListDirectories;
+import commands.CommandMkDir;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
@@ -20,6 +23,12 @@ public class Client {
     static String host ="";
     static int port = 0;
 
+    /**
+     *  Here are some FTP sites we can use to test:
+     *  ftp.ed.ac.uk; email is the password, port = 21
+     *  ftp.microsoft.com; user = anonymous, password = doesn't matter what you use, port = 21
+     */
+
 
     /**
      * Processes the initial user menu and user input.
@@ -31,19 +40,21 @@ public class Client {
             login = user.getLogin();
         else
             System.out.println("Invalid Data");
+
         if(user.inputPass())
             password = user.getPassword();
         else
             System.out.println("Invalid Data");
+
         if(connInfo.inputHost())
             host = connInfo.getHost();
         else
             System.out.println("Invalid Data");
+
         if(connInfo.inputPort())
             port = connInfo.getPort();
         else
             System.out.println("Invalid Data");
-
     }
 
     public static boolean inputServer(){
