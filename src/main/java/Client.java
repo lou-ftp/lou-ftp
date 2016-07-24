@@ -3,9 +3,7 @@
  */
 
 
-import commands.Command;
-import commands.CommandListDirectories;
-import commands.CommandMkDir;
+import commands.CommandLogin;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
@@ -18,6 +16,7 @@ public class Client {
     static FTPClient client = new FTPClient();
     static User user = new User();
     static ConnectionInformation connInfo = new ConnectionInformation();
+    static CommandLogin connectFtp = new CommandLogin();
     static String login = "";
     static String password = "";
     static String host ="";
@@ -55,6 +54,7 @@ public class Client {
             port = connInfo.getPort();
         else
             System.out.println("Invalid Data");
+        login();
     }
 
     public static boolean inputServer(){
@@ -88,11 +88,12 @@ public class Client {
         return result;
     }
 
-    public static boolean login(){
-        boolean result = false;
-
-
-        return result;
+    public static void login(){
+        try {
+            connectFtp.execute(client, new String[]{host, String.valueOf(port), login, password});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getCommand(){
