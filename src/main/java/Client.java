@@ -21,6 +21,10 @@ public class Client {
     static CommandLogin connectFtp = new CommandLogin();
     static AddFileToRemoteServer addFile = new AddFileToRemoteServer();
     static CommandListDirectories listDir = new CommandListDirectories();
+    static String testLogin = "anonymous";
+    static String testPassword = "sms8@pdcx.edu";
+    static String testHost = "ftp.edu.ac.uk";
+    static int testPort = "21";
     static String login = "";
     static String password = "";
     static String host ="";
@@ -38,6 +42,32 @@ public class Client {
      * @param args  list of command line arguments
      */
     public static void main(String[] args) {
+
+        Scanner userChoice = new Scanner(System.in);
+        System.out.println("- - - | Select an option | - - -");
+        System.out.println("User Login . . . . . . . . . (1)");
+        System.out.println("Get file . . . . . . . . . . (2)");
+        System.out.println("List Directories . . . . . . (3)");
+        System.out.println("Log off .  . . . . . . . . . (4)");
+
+        switch (usrChoice) {
+            case 1: usrChoice = "1";
+                
+                break;
+            case 2: usrChoice = "2";
+
+                break;
+            case 3: usrChoice = "3";
+
+                break;
+            case 4: usrChoice = "4";
+
+                break;
+            default: usrChoice = "Invalid Match";
+                break;
+
+        }
+
 
         if(user.inputLogin())
             login = user.getLogin();
