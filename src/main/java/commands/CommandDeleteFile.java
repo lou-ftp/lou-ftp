@@ -14,7 +14,7 @@ public class CommandDeleteFile implements Command {
         // Set path to file for deletion
         Scanner input = new Scanner(System.in);
         System.out.println("Enter the path of the file you would like to delete");
-        String filename = input.next();;
+        String filename = input.next();
         // Set deletion confirmation
         boolean fileExists = false;
         // try to delete the file and communicate result
