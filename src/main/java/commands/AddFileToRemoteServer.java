@@ -1,36 +1,53 @@
 package commands;
 import org.apache.commons.net.ftp.FTPClient;
-import java.io.File;
+
+import java.io.*;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
 /**
  * Created by Simone on 07/23/16.
+ * Refactored by Sara
  */
 public class AddFileToRemoteServer implements Command {
+
+   // make sure to change the permission to the files
+
     public void execute(FTPClient client, String... args) throws IOException {
-        client = new FTPClient();
         Scanner input = new Scanner(System.in);
-        String pathName;
-        String fileName;
-        //get file location and file name
-        System.out.println("Enter the path of the file you would like to upload");
-        pathName = input.next();
-        File fileExt = new File(pathName);
+        client.enterLocalPassiveMode();
+        client.setFileType(client.BINARY_FILE_TYPE);
+        String filepath = null;
+        String name_file = null;
 
-        System.out.println("Enter the name of the file you would like to upload");
-        fileName = input.next();
-        String file_name = fileName;// replace filename by the name of the file
+        System.out.println("Enter the path of the file :");
+        filepath = input.next();
 
-        InputStream in_stream = new FileInputStream(fileExt);
+        System.out.println("please enter the name of the new file:");
+        name_file = input.next();
+        File new_file = new File(filepath);
 
-        boolean check = client.storeFile(file_name, in_stream);
-        // check for success
-        if (check) System.out.println("upload successful");
+        if (!new_file.exists()) {
+            System.out.println("Invalid filename");
+            return;
+        }
+
+        FileInputStream inputStream = new FileInputStream(new_file);
+        boolean uploaded = client.storeFile(name_file, inputStream);
+/*
+        String serverReply = client.getReplyString();
+        System.out.println(serverReply);
+*/
+        inputStream.close();
+
+        if (uploaded) {
+            System.out.println(" Success");
+        }
+        else {
+            System.out.println("failure");
+        }
+
     }
-
-
 }
 
