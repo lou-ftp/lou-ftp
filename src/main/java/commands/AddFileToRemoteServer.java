@@ -37,7 +37,9 @@ public class AddFileToRemoteServer implements Command {
 
         File new_file = new File(filepath);
 
-        try (InputStream inputStream = new FileInputStream(new_file)) {
+        try
+        {
+            InputStream inputStream = new FileInputStream(new_file);
             uploaded = client.storeFile(new_file.getName(), inputStream);
             inputStream.close();
         } catch (IOException e) {
@@ -55,7 +57,6 @@ public class AddFileToRemoteServer implements Command {
         String serverReply = client.getReplyString();
         System.out.println(serverReply);
 */
-
 
         if (uploaded) {
             System.out.println(" Success");
