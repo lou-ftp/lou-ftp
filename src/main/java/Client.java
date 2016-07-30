@@ -23,6 +23,7 @@ public class Client {
     static CommandListDirectories listDir = new CommandListDirectories();
     static CommandMkDir makeDir = new CommandMkDir();
     static CommandRmDir removeDir = new CommandRmDir();
+    static CommandDeleteFile delFile = new CommandDeleteFile();
 
     static String testLogin = "anonymous";
     static String testPassword = "sms8@pdcx.edu";
@@ -101,6 +102,11 @@ public class Client {
         }
         try {
             listDir.execute(client);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            delFile.execute(client);
         } catch (IOException e) {
             e.printStackTrace();
         }
