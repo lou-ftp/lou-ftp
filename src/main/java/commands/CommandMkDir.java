@@ -17,8 +17,5 @@ public class CommandMkDir implements Command {
          System.out.println("Error, unable to make directory.");
      else
          System.out.println("Added directory: " + dirName);
-
  }
-
-
 }
