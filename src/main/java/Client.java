@@ -75,28 +75,38 @@ public class Client {
         }
 
 
-        if(user.inputLogin())
+        if (user.inputLogin())
             login = user.getLogin();
         else
             System.out.println("Invalid Data");
 
-        if(user.inputPass())
+        if (user.inputPass())
             password = user.getPassword();
         else
             System.out.println("Invalid Data");
 
-        if(connInfo.inputHost())
+        if (connInfo.inputHost())
             host = connInfo.getHost();
         else
             System.out.println("Invalid Data");
 
-        if(connInfo.inputPort())
+        if (connInfo.inputPort())
             port = connInfo.getPort();
         else
             System.out.println("Invalid Data");
         login();
+        //try {
+        //    addFile.execute(client);
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
+        //try {
+        //    delFile.execute(client);
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
         try {
-            addFile.execute(client);
+            makeDir.execute(client);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -105,11 +115,7 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            delFile.execute(client);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
     }
 
