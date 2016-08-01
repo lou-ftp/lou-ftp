@@ -34,6 +34,7 @@ public class AddFileToRemoteServer implements Command {
         }
 
         FileInputStream inputStream = new FileInputStream(new_file);
+        client.sendSiteCommand("chmod " + "755" + name_file);
         boolean uploaded = client.storeFile(name_file, inputStream);
 /*
         String serverReply = client.getReplyString();
