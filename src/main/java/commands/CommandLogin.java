@@ -8,6 +8,9 @@ import java.io.IOException;
 /**
  * Created by Dan on 7/23/2016.
  * Takes args[0]-host, arg[1]-port, arg[2]-username, arg[3]-pw
+ * Connects to server
+ * Logs in
+ * Sets the mode to passive mode.
  */
 public class CommandLogin implements Command {
 
