@@ -94,7 +94,16 @@ public class Client {
             port = connInfo.getPort();
         else
             System.out.println("Invalid Data");
+
         login();
+
+
+
+        try {
+            listDir.execute(client);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //try {
         //    addFile.execute(client);
         //} catch (IOException e) {
@@ -111,7 +120,15 @@ public class Client {
             e.printStackTrace();
         }
         try {
+            if(!client.isConnected()){
+                client.connect(host, port);
+            }
             listDir.execute(client);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            client.logout();
         } catch (IOException e) {
             e.printStackTrace();
         }
