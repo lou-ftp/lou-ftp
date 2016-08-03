@@ -26,15 +26,15 @@ public class CommandMkDir implements Command {
             System.out.println("Added directory: " + dirName);
  }
     // Checks to see if directory already exists
-    private boolean checkExists(FTPClient client, String dir){
-        FTPFile[] files = new FTPFile[0];
+    private boolean checkExists(FTPClient client, String directory){
+        FTPFile[] dirs = new FTPFile[0];
         try {
-            files = client.listFiles();
+            dirs = client.listFiles();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (FTPFile file : files) {
-            if( file.getName().endsWith(dir)) return true;
+        for (FTPFile file : dirs) {
+            if( file.getName().endsWith(directory)) return true;
         }
         return false;
     }
