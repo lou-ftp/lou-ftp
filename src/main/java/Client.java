@@ -47,6 +47,7 @@ public class Client {
      */
     public static void main(String[] args) {
 
+        /*
         if (user.inputLogin())
             login = user.getLogin();
         else
@@ -66,18 +67,25 @@ public class Client {
             port = connInfo.getPort();
         else
             System.out.println("Invalid Data");
+        login();*/
 
-        login();
+
+        testLogin();
+
         Scanner usrChoice = new Scanner(System.in);
         String choice;
         System.out.println("- - - | Select an option | - - -");
-        System.out.println("User Login . . . . . . . . . (1)");
-        System.out.println("Get file . . . . . . . . . . (2)");
-        System.out.println("List Directories . . . . . . (3)");
-        System.out.println("Log off .  . . . . . . . . . (4)");
+        System.out.println("List directories . . . . . . . .   (1)");
+        System.out.println("Get file . . . . . . . . . . . .   (2)");
+        System.out.println("Delete file . . . . . . . . . . .  (3)");
+        System.out.println("Make Directory .  . . . . . . . .  (5)");
+        System.out.println("Remove Directory locally . . . . . (6)");
+        System.out.println("Remove Directory remotely . . . .  (7)");
+        System.out.println("Log off .  . . . . . . . . . . . . (8)");
 
         choice = usrChoice.next();
         switch (choice) {
+
             case "1": //usrChoice = "1";
                 System.out.println("Success 1");
                 break;
@@ -94,15 +102,18 @@ public class Client {
             case "4": //usrChoice = "4";
 
                 break;
+            case "5":
+                break;
+            case "6":
+                break;
+            case "7":
+                break;
+            case "8":
+                break;
             default: //usrChoice = "Invalid Match";
                 break;
 
         }
-
-
-
-
-
 
 
         //try {
@@ -176,6 +187,16 @@ public class Client {
             e.printStackTrace();
         }
     }
+
+    public static void testLogin(){
+        try {
+            connectFtp.execute(client, new String[]{testHost, String.valueOf(testPort), testLogin, testPassword});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public String getCommand(){
         String command = "";
