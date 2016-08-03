@@ -47,34 +47,6 @@ public class Client {
      */
     public static void main(String[] args) {
 
-        Scanner usrChoice = new Scanner(System.in);
-        String choice;
-        System.out.println("- - - | Select an option | - - -");
-        System.out.println("User Login . . . . . . . . . (1)");
-        System.out.println("Get file . . . . . . . . . . (2)");
-        System.out.println("List Directories . . . . . . (3)");
-        System.out.println("Log off .  . . . . . . . . . (4)");
-
-        choice = usrChoice.next();
-        switch (choice) {
-            case "1": //usrChoice = "1";
-                System.out.println("Success 1");
-                break;
-            case "2": //usrChoice = "2";
-
-                break;
-            case "3": //usrChoice = "3";
-
-                break;
-            case "4": //usrChoice = "4";
-
-                break;
-            default: //usrChoice = "Invalid Match";
-                break;
-
-        }
-
-
         if (user.inputLogin())
             login = user.getLogin();
         else
@@ -96,14 +68,43 @@ public class Client {
             System.out.println("Invalid Data");
 
         login();
+        Scanner usrChoice = new Scanner(System.in);
+        String choice;
+        System.out.println("- - - | Select an option | - - -");
+        System.out.println("User Login . . . . . . . . . (1)");
+        System.out.println("Get file . . . . . . . . . . (2)");
+        System.out.println("List Directories . . . . . . (3)");
+        System.out.println("Log off .  . . . . . . . . . (4)");
 
+        choice = usrChoice.next();
+        switch (choice) {
+            case "1": //usrChoice = "1";
+                System.out.println("Success 1");
+                break;
+            case "2": //usrChoice = "2";
 
+                break;
+            case "3": //usrChoice = "3";
+                try {
+                    listDir.execute(client);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "4": //usrChoice = "4";
 
-        try {
-            listDir.execute(client);
-        } catch (IOException e) {
-            e.printStackTrace();
+                break;
+            default: //usrChoice = "Invalid Match";
+                break;
+
         }
+
+
+
+
+
+
+
         //try {
         //    addFile.execute(client);
         //} catch (IOException e) {
