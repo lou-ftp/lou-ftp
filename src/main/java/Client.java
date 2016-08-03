@@ -74,46 +74,94 @@ public class Client {
 
         Scanner usrChoice = new Scanner(System.in);
         String choice;
-        System.out.println("- - - | Select an option | - - -");
-        System.out.println("List directories . . . . . . . .   (1)");
-        System.out.println("Get file . . . . . . . . . . . .   (2)");
-        System.out.println("Delete file . . . . . . . . . . .  (3)");
-        System.out.println("Make Directory .  . . . . . . . .  (5)");
-        System.out.println("Remove Directory locally . . . . . (6)");
-        System.out.println("Remove Directory remotely . . . .  (7)");
-        System.out.println("Log off .  . . . . . . . . . . . . (8)");
 
-        choice = usrChoice.next();
-        switch (choice) {
 
-            case "1": //usrChoice = "1";
-                System.out.println("Success 1");
-                break;
-            case "2": //usrChoice = "2";
+            System.out.println("- - - | Select an option | - - -");
+            System.out.println("List directories . . . . . . . .   (1)");
+            System.out.println("Get file . . . . . . . . . . . .   (2)");
+            System.out.println("Delete file . . . . . . . . . . .  (3)");
+            System.out.println("Make Directory .  . . . . . . . .  (4)");
+            System.out.println("Remove Directory locally . . . . . (5)");
+            System.out.println("Remove Directory remotely . . . .  (6)");
+            System.out.println("Remove Directory remotely . . . .  (7)");
+            System.out.println("Log off .  . . . . . . . . . . . . (8)");
 
-                break;
-            case "3": //usrChoice = "3";
-                try {
-                    listDir.execute(client);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "4": //usrChoice = "4";
+            choice = usrChoice.next();
 
-                break;
-            case "5":
-                break;
-            case "6":
-                break;
-            case "7":
-                break;
-            case "8":
-                break;
-            default: //usrChoice = "Invalid Match";
-                break;
+            if(choice == "1")
+            {
+                System.out.println("testing 1");
+            }
 
-        }
+            switch (choice) {
+
+                case "1": //usrChoice = "1";
+                    try {
+                        listDir.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "2": //usrChoice = "2";
+
+                    break;
+                case "3": //usrChoice = "3";
+                    System.out.println("Would you like to view the files on the remote server first?");
+                    System.out.println("Yes . . . . . . . . . . . (1)");
+                    System.out.println("No . . . . . . . . . . .  (2)");
+
+                    choice = usrChoice.next();
+
+                    if (choice.equals("1")) {
+                        try {
+                            listDir.execute(client);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    try {
+                        delFile.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                case "4": //usrChoice = "4";
+                    try {
+                        makeDir.execute(client);
+                    } catch (IOException e ) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "5":
+                    //not working
+                    try {
+                        removeDir.execute(client);
+                    } catch (IOException e ) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "6":
+                    //not added
+                    break;
+                case "7":
+                    try {
+                        addFile.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "8":
+                    break;
+                default: //usrChoice = "Invalid Match";
+                    break;
+
+            }
+
+
+
+        System.out.println("Test print - EXITING SWITCH STATEMENT");
 
 
         //try {
