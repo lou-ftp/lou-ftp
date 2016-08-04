@@ -27,6 +27,7 @@ public class Client {
     static CommandDeleteFile delFile = new CommandDeleteFile();
     static CommandLogoff logOff = new CommandLogoff();
     static DeleteDirectoryonRemoteServer delDirRemote = new DeleteDirectoryonRemoteServer();
+    static CommandGetFile getFile = new CommandGetFile();
 
     static String testLogin = "anonymous";
     static String testPassword = "sms8@pdcx.edu";
@@ -114,7 +115,12 @@ public class Client {
                     }
                     break;
                 case "2": //usrChoice = "2";
-
+                    //NOT WORKING
+                    try {
+                        getFile.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "3": //usrChoice = "3";
                     System.out.println("Would you like to view the files on the remote server first?");
@@ -145,7 +151,7 @@ public class Client {
                     }
                     break;
                 case "5":
-                    //not working
+                    //THIS IS ACTUALLY REMOTE
                     try {
                         removeDir.execute(client);
                     } catch (IOException e) {
@@ -153,7 +159,7 @@ public class Client {
                     }
                     break;
                 case "6":
-                    //not tested
+                    //WORKING REMOVES REMOTE
                     try {
                         delDirRemote.execute(client);
                     } catch (IOException e) {
