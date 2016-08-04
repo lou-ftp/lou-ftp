@@ -50,33 +50,45 @@ public class Client {
      */
     public static void main(String[] args) {
 
-        /*
-        if (user.inputLogin())
-            login = user.getLogin();
-        else
-            System.out.println("Invalid Data");
-
-        if (user.inputPass())
-            password = user.getPassword();
-        else
-            System.out.println("Invalid Data");
-
-        if (connInfo.inputHost())
-            host = connInfo.getHost();
-        else
-            System.out.println("Invalid Data");
-
-        if (connInfo.inputPort())
-            port = connInfo.getPort();
-        else
-            System.out.println("Invalid Data");
-        login();*/
-
-
-        testLogin();
-
         Scanner usrChoice = new Scanner(System.in);
         String choice;
+
+        testLogin();
+        System.out.println("You have been auto logged in.");
+        System.out.println("Would you like to login under a different user?");
+        System.out.println("Yes . . . . . . . . . . . (1)");
+        System.out.println("No . . . . . . . . . . .  (2)");
+
+        choice = usrChoice.next();
+
+        if (choice.equals("1")) {
+            try {
+                logOff.execute(client);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (user.inputLogin())
+                login = user.getLogin();
+            else
+                System.out.println("Invalid Data");
+
+            if (user.inputPass())
+                password = user.getPassword();
+            else
+                System.out.println("Invalid Data");
+
+            if (connInfo.inputHost())
+                host = connInfo.getHost();
+            else
+                System.out.println("Invalid Data");
+
+            if (connInfo.inputPort())
+                port = connInfo.getPort();
+            else
+                System.out.println("Invalid Data");
+            login();
+        }
 
         do {
 
@@ -118,7 +130,6 @@ public class Client {
                             e.printStackTrace();
                         }
                     }
-
                     try {
                         delFile.execute(client);
                     } catch (IOException e) {
