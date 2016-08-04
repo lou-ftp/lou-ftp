@@ -3,6 +3,7 @@
  */
 
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import commands.*;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
@@ -24,6 +25,8 @@ public class Client {
     static CommandMkDir makeDir = new CommandMkDir();
     static CommandRmDir removeDir = new CommandRmDir();
     static CommandDeleteFile delFile = new CommandDeleteFile();
+    static CommandLogoff logOff = new CommandLogoff();
+    static DeleteDirectoryonRemoteServer delDirRemote = new DeleteDirectoryonRemoteServer();
 
     static String testLogin = "anonymous";
     static String testPassword = "sms8@pdcx.edu";
@@ -75,6 +78,7 @@ public class Client {
         Scanner usrChoice = new Scanner(System.in);
         String choice;
 
+        do {
 
             System.out.println("- - - | Select an option | - - -");
             System.out.println("List directories . . . . . . . .   (1)");
@@ -87,11 +91,6 @@ public class Client {
             System.out.println("Log off .  . . . . . . . . . . . . (8)");
 
             choice = usrChoice.next();
-
-            if(choice == "1")
-            {
-                System.out.println("testing 1");
-            }
 
             switch (choice) {
 
@@ -130,7 +129,7 @@ public class Client {
                 case "4": //usrChoice = "4";
                     try {
                         makeDir.execute(client);
-                    } catch (IOException e ) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
@@ -138,12 +137,17 @@ public class Client {
                     //not working
                     try {
                         removeDir.execute(client);
-                    } catch (IOException e ) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
                 case "6":
-                    //not added
+                    //not tested
+                    try {
+                        delDirRemote.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "7":
                     try {
@@ -153,15 +157,21 @@ public class Client {
                     }
                     break;
                 case "8":
+                    try {
+                        logOff.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 default: //usrChoice = "Invalid Match";
+                    System.out.println("Invalid option.  Please select a valid option");
                     break;
-
             }
 
+        }while(!choice.equals("8"));
 
 
-        System.out.println("Test print - EXITING SWITCH STATEMENT");
+        System.out.println("Exiting the program");
 
 
         //try {
@@ -174,6 +184,8 @@ public class Client {
         //} catch (IOException e) {
         //    e.printStackTrace();
         //}
+
+        /*
         try {
             makeDir.execute(client);
         } catch (IOException e) {
@@ -193,7 +205,7 @@ public class Client {
             e.printStackTrace();
         }
 
-
+*/
     }
 
 
