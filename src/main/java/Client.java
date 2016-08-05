@@ -116,8 +116,12 @@ public class Client {
                     break;
                 case "2": //usrChoice = "2";
                     //NOT WORKING
+                    System.out.println("What file do you want to download?");
+                    String path = usrChoice.next();
+                    System.out.println("Where do you want to save the downloaded file?");
+                    String save = usrChoice.next();
                     try {
-                        getFile.execute(client);
+                        getFile.execute(client, path, save);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
