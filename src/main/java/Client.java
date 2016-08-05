@@ -3,13 +3,12 @@
  */
 
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import commands.*;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
-import java.util.Scanner;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 
 public class Client {
@@ -29,9 +28,9 @@ public class Client {
     static DeleteDirectoryonRemoteServer delDirRemote = new DeleteDirectoryonRemoteServer();
     static CommandGetFile getFile = new CommandGetFile();
 
-    static String testLogin = "anonymous";
-    static String testPassword = "sms8@pdcx.edu";
-    static String testHost = "ftp.ed.ac.uk";
+    static String testLogin = "lou-ftp";
+    static String testPassword = "lou-ftp";
+    static String testHost = "ftp.drivehq.com";
     static int testPort = 21;
     static String login = "";
     static String password = "";
