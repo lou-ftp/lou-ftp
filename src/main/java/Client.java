@@ -3,9 +3,7 @@
  */
 
 
-import commands.AddFileToRemoteServer;
-import commands.CommandListDirectories;
-import commands.CommandLogin;
+import commands.*;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 import java.util.Scanner;
@@ -20,11 +18,16 @@ public class Client {
     static User user = new User();
     static ConnectionInformation connInfo = new ConnectionInformation();
     static CommandLogin connectFtp = new CommandLogin();
+    static CommandLogoff disconnectFTP = new CommandLogoff();
     static AddFileToRemoteServer addFile = new AddFileToRemoteServer();
     static CommandListDirectories listDir = new CommandListDirectories();
+    static CommandMkDir makeDir = new CommandMkDir();
+    static CommandRmDir removeDir = new CommandRmDir();
+    static CommandDeleteFile delFile = new CommandDeleteFile();
+
     static String testLogin = "anonymous";
     static String testPassword = "sms8@pdcx.edu";
-    static String testHost = "ftp.edu.ac.uk";
+    static String testHost = "ftp.ed.ac.uk";
     static int testPort = 21;
     static String login = "";
     static String password = "";
@@ -35,8 +38,8 @@ public class Client {
      *  Here are some FTP sites we can use to test:
      *  ftp.ed.ac.uk; email is the password, port = 21
      *  ftp.microsoft.com; user = anonymous, password = doesn't matter what you use, port = 21
+     *
      */
-
 
     /**
      * Processes the initial user menu and user input.
@@ -72,28 +75,38 @@ public class Client {
         }
 
 
-        if(user.inputLogin())
+        if (user.inputLogin())
             login = user.getLogin();
         else
             System.out.println("Invalid Data");
 
-        if(user.inputPass())
+        if (user.inputPass())
             password = user.getPassword();
         else
             System.out.println("Invalid Data");
 
-        if(connInfo.inputHost())
+        if (connInfo.inputHost())
             host = connInfo.getHost();
         else
             System.out.println("Invalid Data");
 
-        if(connInfo.inputPort())
+        if (connInfo.inputPort())
             port = connInfo.getPort();
         else
             System.out.println("Invalid Data");
         login();
+        //try {
+        //    addFile.execute(client);
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
+        //try {
+        //    delFile.execute(client);
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
         try {
-            addFile.execute(client);
+            makeDir.execute(client);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -102,7 +115,10 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
+
 
     public static boolean inputServer(){
         boolean result = false;
@@ -111,13 +127,13 @@ public class Client {
         return result;
     }
 
-    public static boolean openSocket() {
+    public static boolean openSocket(String h, int p) {
         boolean result = false;
 
         try {
-            client.connect(host, port);
-            System.out.println("Connected to " + host);
-            System.out.print(client.getReplyString());
+            client.connect(h, p);
+            System.out.println("Connected to " + h);
+            //System.out.print(client.getReplyString());
 
             int reply = client.getReplyCode(); // check reply code.
             if(!FTPReply.isPositiveCompletion(reply)) {
@@ -160,4 +176,120 @@ public class Client {
     public void quit(){
         // disconnect
     }
+
+
+
+    // **************   TESTING ************** //
+
+    private static void run_Tests() {
+        System.out.println("Starting tests....  \n");
+
+        test_LoginSuccess();    // command -- CommandLogin()
+        //test_LoginSuccess();   // command -- CommandLogin()
+        //test_LoginFail();    // command -- CommandLogin()
+
+        test_listDirectories();
+
+        //TODO - mk dir code puts in current directory user is in on the server
+        //test_mkDir();    // command -- CommandMkDir();
+
+        //TODO - rm dir code puts in current directory user is in on the server
+        test_removeDir();   // command -- CommandRmDir();  //(String pathname)
+
+        //TODO - Simone added a file "DeleteDirectoryOnRemoteServer"
+        // TODO      -- which asks the user for a specific path and file name...
+
+
+        test_listDirectories();
+
+       //test_addFile();    // command -- AddFileToRemoteServer();
+
+        test_Logoff();    // command -- CommandLogoff()
+
+    }
+
+    private static void test_LoginSuccess() {
+        System.out.println("\nloginSuccess... ");
+
+        try {
+            connectFtp.execute(client, new String[]{testHost, String.valueOf(testPort), testLogin, testPassword});
+        } catch (IOException e) {
+            //e.printStackTrace();
+        }
+    }
+
+    private static void test_LoginFail() {
+        System.out.println("\nloginFail... \n");
+        String badLogin = "aaa";
+
+        try {
+            connectFtp.execute(client, new String[]{testHost, String.valueOf(testPort), badLogin, testPassword});
+        } catch (IOException e) {
+            //e.printStackTrace();
+        }
+    }
+
+    private static void test_Logoff() {
+        System.out.println("\ntest_Logoff...");
+
+        try {
+            disconnectFTP.execute(client);
+        } catch (IOException e) {
+            System.err.println("failed logout " + e.getMessage() + "\n");
+            //e.printStackTrace();
+        }
+    }
+
+    private static void test_listDirectories() {
+        System.out.println("\ntest_listDirectories...");
+
+        try {
+            listDir.execute(client);
+        } catch (IOException e) {
+            System.err.println("failed list directories " + e.getMessage() + "\n");
+            //e.printStackTrace();
+        }
+    }
+
+    private static void test_addFile() {
+        System.out.println("\ntest_add file...");   // command -- AddFileToRemoteServer();
+
+        try {
+            addFile.execute(client);
+        } catch (IOException e) {
+            System.err.println("failed addfile " + e.getMessage() + "\n");
+            //e.printStackTrace();
+        }
+
+    }
+
+    private static void test_mkDir() {
+        System.out.println("\ntest_make directory...");   // command -- CommandMkDir();
+
+        String dirName = "myDirectory";  // TODO - How will we handle the user input for mk dir?
+
+        try {
+            makeDir.execute(client, dirName);
+        } catch (IOException e) {
+            System.err.println("failed mkDir " + e.getMessage() + "\n");
+            //e.printStackTrace();
+        }
+
+    }
+
+    private static void test_removeDir() {
+        System.out.println("\ntest_remove directory...");   // command -- CommandRmDir();
+
+        String dirName = "myDirectory";  // TODO - How will we handle the user input for REMOVE dir?
+                                         // TODO - How do we handle removing non-empty directories?
+
+        try {
+            removeDir.execute(client, dirName);
+        } catch (IOException e) {
+            System.err.println("test_remove directory - Failed " + e.getMessage() + "\n");
+            //e.printStackTrace();
+        }
+
+    }
+
 }

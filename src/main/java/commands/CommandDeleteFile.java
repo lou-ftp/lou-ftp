@@ -11,9 +11,9 @@ import java.util.Scanner;
 public class CommandDeleteFile implements Command {
     @Override
     public void execute(FTPClient client, String... args) throws IOException {
-        // Set path to file for deletion
+        // Get the name of the file to delete from remote directtory
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the path of the file you would like to delete");
+        System.out.println("Enter the name of the file on remote server that you would like to delete:");
         String filename = input.next();
         // Set deletion confirmation
         boolean fileExists = false;
@@ -22,6 +22,7 @@ public class CommandDeleteFile implements Command {
             fileExists = client.deleteFile(filename);
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Server Error, File was not deleted.");
         }
         if (fileExists)
             System.out.println("File "+ filename + " was deleted.");

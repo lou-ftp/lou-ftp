@@ -10,7 +10,9 @@ public class CommandListDirectories implements Command {
         FTPFile[] files = args.length > 0 ? client.listFiles(args[0]) : client.listFiles();
         System.out.println("Items in Directory " + (args.length > 0 ? args[0] : client.printWorkingDirectory()));
         for (FTPFile file : files) {
-            System.out.println(file.getName() + " Size:" + file.getSize() + " Last Modified:" + file.getTimestamp());
+            System.out.printf("%-20s%-17s%-30s\n", file.getName(),
+                    "Size: " + file.getSize(),
+                    "Last Modified:  " + file.getTimestamp().getTime());
         }
     }
 }

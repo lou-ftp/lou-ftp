@@ -21,10 +21,10 @@ public class CommandLogin implements Command {
             }
             boolean success = client.login(args[2], args[3]);
             if (!success) {
-                System.out.println("Could not login to the server");
+                System.out.println("Could not login to server host: " + args[0]);
                 return;
             } else {
-                System.out.println("Logged into server");
+                System.out.println("Logged into server host: " + args[0]);
             }
         } catch (IOException ex) {
             System.out.println("Login Failed!");
