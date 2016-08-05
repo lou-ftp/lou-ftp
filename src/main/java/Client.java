@@ -27,6 +27,7 @@ public class Client {
     static CommandLogoff logOff = new CommandLogoff();
     static DeleteDirectoryonRemoteServer delDirRemote = new DeleteDirectoryonRemoteServer();
     static CommandGetFile getFile = new CommandGetFile();
+    static CommandGetMultiple getMulti = new CommandGetMultiple();
 
     static String testLogin = "lou-ftp";
     static String testPassword = "lou-ftp";
@@ -100,7 +101,8 @@ public class Client {
             System.out.println("Remove Directory locally . . . . . (5)");
             System.out.println("Remove Directory remotely . . . .  (6)");
             System.out.println("Add a file to remote . . . . . . . (7)");
-            System.out.println("Log off .  . . . . . . . . . . . . (8)");
+            System.out.println("Add multiple file to remote  . . . (8)");
+            System.out.println("Log off .  . . . . . . . . . . . . (9)");
 
             choice = usrChoice.next();
 
@@ -114,7 +116,6 @@ public class Client {
                     }
                     break;
                 case "2": //usrChoice = "2";
-                    //NOT WORKING
                     System.out.println("What file do you want to download?");
                     String path = usrChoice.next();
                     System.out.println("Where do you want to save the downloaded file?");
@@ -178,6 +179,13 @@ public class Client {
                     break;
                 case "8":
                     try {
+                        addMulti.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "9":
+                    try {
                         logOff.execute(client);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -188,7 +196,7 @@ public class Client {
                     break;
             }
 
-        }while(!choice.equals("8"));
+        }while(!choice.equals("9"));
 
 
         System.out.println("Exiting the program");
