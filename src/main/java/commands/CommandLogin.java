@@ -7,6 +7,10 @@ import java.io.IOException;
 
 /**
  * Created by Dan on 7/23/2016.
+ * Takes args[0]-host, arg[1]-port, arg[2]-username, arg[3]-pw
+ * Connects to server
+ * Logs in
+ * Sets the mode to passive mode.
  */
 public class CommandLogin implements Command {
 
@@ -26,6 +30,7 @@ public class CommandLogin implements Command {
             } else {
                 System.out.println("Logged into server host: " + args[0]);
             }
+            client.enterLocalPassiveMode();
         } catch (IOException ex) {
             System.out.println("Login Failed!");
             ex.printStackTrace();

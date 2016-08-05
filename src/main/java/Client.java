@@ -3,6 +3,7 @@
  */
 
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import commands.*;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
@@ -24,6 +25,9 @@ public class Client {
     static CommandMkDir makeDir = new CommandMkDir();
     static CommandRmDir removeDir = new CommandRmDir();
     static CommandDeleteFile delFile = new CommandDeleteFile();
+    static CommandLogoff logOff = new CommandLogoff();
+    static DeleteDirectoryonRemoteServer delDirRemote = new DeleteDirectoryonRemoteServer();
+    static CommandGetFile getFile = new CommandGetFile();
 
     static String testLogin = "anonymous";
     static String testPassword = "sms8@pdcx.edu";
@@ -49,52 +53,148 @@ public class Client {
 
         Scanner usrChoice = new Scanner(System.in);
         String choice;
-        System.out.println("- - - | Select an option | - - -");
-        System.out.println("User Login . . . . . . . . . (1)");
-        System.out.println("Get file . . . . . . . . . . (2)");
-        System.out.println("List Directories . . . . . . (3)");
-        System.out.println("Log off .  . . . . . . . . . (4)");
+
+        testLogin();
+        System.out.println("You have been auto logged in.");
+        System.out.println("Would you like to login under a different user?");
+        System.out.println("Yes . . . . . . . . . . . (1)");
+        System.out.println("No . . . . . . . . . . .  (2)");
 
         choice = usrChoice.next();
-        switch (choice) {
-            case "1": //usrChoice = "1";
-                System.out.println("Success 1");
-                break;
-            case "2": //usrChoice = "2";
 
-                break;
-            case "3": //usrChoice = "3";
+        if (choice.equals("1")) {
+            try {
+                logOff.execute(client);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-                break;
-            case "4": //usrChoice = "4";
+            if (user.inputLogin())
+                login = user.getLogin();
+            else
+                System.out.println("Invalid Data");
 
-                break;
-            default: //usrChoice = "Invalid Match";
-                break;
+            if (user.inputPass())
+                password = user.getPassword();
+            else
+                System.out.println("Invalid Data");
 
+            if (connInfo.inputHost())
+                host = connInfo.getHost();
+            else
+                System.out.println("Invalid Data");
+
+            if (connInfo.inputPort())
+                port = connInfo.getPort();
+            else
+                System.out.println("Invalid Data");
+            login();
         }
 
+        do {
 
-        if (user.inputLogin())
-            login = user.getLogin();
-        else
-            System.out.println("Invalid Data");
+            System.out.println("- - - | Select an option | - - -");
+            System.out.println("List directories . . . . . . . .   (1)");
+            System.out.println("Get file . . . . . . . . . . . .   (2)");
+            System.out.println("Delete file remotely . .  . . . .  (3)");
+            System.out.println("Make Directory .  . . . . . . . .  (4)");
+            System.out.println("Remove Directory locally . . . . . (5)");
+            System.out.println("Remove Directory remotely . . . .  (6)");
+            System.out.println("Add a file to remote . . . . . . . (7)");
+            System.out.println("Log off .  . . . . . . . . . . . . (8)");
 
-        if (user.inputPass())
-            password = user.getPassword();
-        else
-            System.out.println("Invalid Data");
+            choice = usrChoice.next();
 
-        if (connInfo.inputHost())
-            host = connInfo.getHost();
-        else
-            System.out.println("Invalid Data");
+            switch (choice) {
 
-        if (connInfo.inputPort())
-            port = connInfo.getPort();
-        else
-            System.out.println("Invalid Data");
-        login();
+                case "1": //usrChoice = "1";
+                    try {
+                        listDir.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "2": //usrChoice = "2";
+                    //NOT WORKING
+                    System.out.println("What file do you want to download?");
+                    String path = usrChoice.next();
+                    System.out.println("Where do you want to save the downloaded file?");
+                    String save = usrChoice.next();
+                    try {
+                        getFile.execute(client, path, save);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "3": //usrChoice = "3";
+                    System.out.println("Would you like to view the files on the remote server first?");
+                    System.out.println("Yes . . . . . . . . . . . (1)");
+                    System.out.println("No . . . . . . . . . . .  (2)");
+
+                    choice = usrChoice.next();
+
+                    if (choice.equals("1")) {
+                        try {
+                            listDir.execute(client);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    try {
+                        delFile.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                case "4": //usrChoice = "4";
+                    try {
+                        makeDir.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "5":
+                    //THIS IS ACTUALLY REMOTE
+                    try {
+                        removeDir.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "6":
+                    //WORKING REMOVES REMOTE
+                    try {
+                        delDirRemote.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "7":
+                    try {
+                        addFile.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "8":
+                    try {
+                        logOff.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                default: //usrChoice = "Invalid Match";
+                    System.out.println("Invalid option.  Please select a valid option");
+                    break;
+            }
+
+        }while(!choice.equals("8"));
+
+
+        System.out.println("Exiting the program");
+
+
         //try {
         //    addFile.execute(client);
         //} catch (IOException e) {
@@ -105,18 +205,28 @@ public class Client {
         //} catch (IOException e) {
         //    e.printStackTrace();
         //}
+
+        /*
         try {
             makeDir.execute(client);
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
+            if(!client.isConnected()){
+                client.connect(host, port);
+            }
             listDir.execute(client);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+            client.logout();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-
+*/
     }
 
 
@@ -158,6 +268,16 @@ public class Client {
             e.printStackTrace();
         }
     }
+
+    public static void testLogin(){
+        try {
+            connectFtp.execute(client, new String[]{testHost, String.valueOf(testPort), testLogin, testPassword});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public String getCommand(){
         String command = "";
