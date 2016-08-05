@@ -15,7 +15,6 @@ public class CommandGetMultiple implements Command {
         Scanner userChoice = new Scanner(System.in);
         String yourChoice;
 
-
         FileOutputStream stream = new FileOutputStream(args[1]);
         if (!client.retrieveFile(args[0], stream)) {
             System.out.println("Could not find file " + args[0] + " or failed to retrieve for other reasons");
@@ -32,7 +31,7 @@ public class CommandGetMultiple implements Command {
             yourChoice = userChoice.next();
 
 
-            FileOutputStream stream = new FileOutputStream(args[1]);
+            stream = new FileOutputStream(args[1]);
             if (!client.retrieveFile(args[0], stream)) {
                 System.out.println("Could not find file " + args[0] + " or failed to retrieve for other reasons");
             }
