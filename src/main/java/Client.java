@@ -3,13 +3,12 @@
  */
 
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import commands.*;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
-import java.util.Scanner;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 
 public class Client {
@@ -28,10 +27,11 @@ public class Client {
     static CommandLogoff logOff = new CommandLogoff();
     static DeleteDirectoryonRemoteServer delDirRemote = new DeleteDirectoryonRemoteServer();
     static CommandGetFile getFile = new CommandGetFile();
+    static CommandGetMultiple getMulti = new CommandGetMultiple();
 
-    static String testLogin = "anonymous";
-    static String testPassword = "sms8@pdcx.edu";
-    static String testHost = "ftp.ed.ac.uk";
+    static String testLogin = "lou-ftp";
+    static String testPassword = "lou-ftp";
+    static String testHost = "ftp.drivehq.com";
     static int testPort = 21;
     static String login = "";
     static String password = "";
@@ -96,12 +96,13 @@ public class Client {
             System.out.println("- - - | Select an option | - - -");
             System.out.println("List directories . . . . . . . .   (1)");
             System.out.println("Get file . . . . . . . . . . . .   (2)");
-            System.out.println("Delete file . . . . . . . . . . .  (3)");
+            System.out.println("Delete file remotely . .  . . . .  (3)");
             System.out.println("Make Directory .  . . . . . . . .  (4)");
             System.out.println("Remove Directory locally . . . . . (5)");
             System.out.println("Remove Directory remotely . . . .  (6)");
-            System.out.println("Remove Directory remotely . . . .  (7)");
-            System.out.println("Log off .  . . . . . . . . . . . . (8)");
+            System.out.println("Add a file to remote . . . . . . . (7)");
+            System.out.println("Add multiple file to remote  . . . (8)");
+            System.out.println("Log off .  . . . . . . . . . . . . (9)");
 
             choice = usrChoice.next();
 
@@ -115,7 +116,6 @@ public class Client {
                     }
                     break;
                 case "2": //usrChoice = "2";
-                    //NOT WORKING
                     System.out.println("What file do you want to download?");
                     String path = usrChoice.next();
                     System.out.println("Where do you want to save the downloaded file?");
@@ -179,6 +179,13 @@ public class Client {
                     break;
                 case "8":
                     try {
+                        getMulti.execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "9":
+                    try {
                         logOff.execute(client);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -189,7 +196,7 @@ public class Client {
                     break;
             }
 
-        }while(!choice.equals("8"));
+        }while(!choice.equals("9"));
 
 
         System.out.println("Exiting the program");
