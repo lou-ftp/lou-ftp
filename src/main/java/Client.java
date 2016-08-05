@@ -179,7 +179,7 @@ public class Client {
                     break;
                 case "8":
                     try {
-                        addMulti.execute(client);
+                        getMulti.execute(client);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
