@@ -96,11 +96,11 @@ public class Client {
             System.out.println("- - - | Select an option | - - -");
             System.out.println("List directories . . . . . . . .   (1)");
             System.out.println("Get file . . . . . . . . . . . .   (2)");
-            System.out.println("Delete file . . . . . . . . . . .  (3)");
+            System.out.println("Delete file remotely . .  . . . .  (3)");
             System.out.println("Make Directory .  . . . . . . . .  (4)");
             System.out.println("Remove Directory locally . . . . . (5)");
             System.out.println("Remove Directory remotely . . . .  (6)");
-            System.out.println("Remove Directory remotely . . . .  (7)");
+            System.out.println("Add a file to remote . . . . . . . (7)");
             System.out.println("Log off .  . . . . . . . . . . . . (8)");
 
             choice = usrChoice.next();
