@@ -5,7 +5,6 @@
 
 import commands.*;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPReply;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -237,36 +236,7 @@ public class Client {
     }
 
 
-    public static boolean inputServer(){
-        boolean result = false;
 
-        // do some stuff
-        return result;
-    }
-
-    public static boolean openSocket(String h, int p) {
-        boolean result = false;
-
-        try {
-            client.connect(h, p);
-            System.out.println("Connected to " + h);
-            //System.out.print(client.getReplyString());
-
-            int reply = client.getReplyCode(); // check reply code.
-            if(!FTPReply.isPositiveCompletion(reply)) {
-                client.disconnect();
-                System.err.println("FTP server refused connection.");
-                System.exit(1);
-            }
-            result = true;
-        }
-        catch(IOException e){
-            System.err.println("Caught IOException: " + e.getMessage() + "\n");
-            e.printStackTrace();
-        }
-
-        return result;
-    }
 
     public static void login(){
         try {
