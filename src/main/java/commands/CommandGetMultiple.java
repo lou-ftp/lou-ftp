@@ -34,7 +34,7 @@ public class CommandGetMultiple implements Command {
 
             addFile.execute(client, args);
 
-            System.out.println("Would you like to add another file?");
+            System.out.println("Would you like to get another file?");
             System.out.println("Yes . . . . . . . . . . . (1)");
             System.out.println("No . . . . . . . . . . .  (2)");
 
