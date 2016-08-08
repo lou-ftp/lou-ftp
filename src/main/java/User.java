@@ -1,5 +1,6 @@
 /**
  * Created by Dan Conradt on 7/9/2016.
+ * Basic get and set user information
  */
 
 import java.util.Scanner;
@@ -21,15 +22,16 @@ public class User  {
         this.password = password;
     }
 
-    // method to return login information
+    // method to return user login
     public String getLogin() {
         return login;
     }
 
+    // method to return user password
     public String getPassword(){
         return password;
     }
-    //
+
     public boolean inputLogin(){
         boolean result = false;
         System.out.println("User Login:");
