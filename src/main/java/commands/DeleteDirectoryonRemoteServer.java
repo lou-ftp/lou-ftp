@@ -15,8 +15,6 @@ public class DeleteDirectoryonRemoteServer implements Command {
         Scanner input = new Scanner(System.in);
         System.out.println ( " Enter the path of the directory you will like to delete \n");
         directoryPath = input.next();
-        //FTPClient ftpClient = new FTPClient();
-        //client = new FTPClient();
         boolean deleted = client.removeDirectory(directoryPath);
         if (deleted) {
             System.out.println(" Success removing the directory.");
