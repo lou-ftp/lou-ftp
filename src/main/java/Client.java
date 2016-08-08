@@ -37,12 +37,6 @@ public class Client {
     static String host ="";
     static int port = 0;
 
-    /**
-     *  Here are some FTP sites we can use to test:
-     *  ftp.ed.ac.uk; email is the password, port = 21
-     *  ftp.microsoft.com; user = anonymous, password = doesn't matter what you use, port = 21
-     *
-     */
 
     /**
      * Processes the initial user menu and user input.
@@ -91,7 +85,6 @@ public class Client {
         }
 
         do {
-
             System.out.println("- - - | Select an option | - - -");
             System.out.println("List directories . . . . . . . .   (1)");
             System.out.println("Get file . . . . . . . . . . . .   (2)");
@@ -107,14 +100,14 @@ public class Client {
 
             switch (choice) {
 
-                case "1": //usrChoice = "1";
+                case "1":
                     try {
                         listDir.execute(client);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
-                case "2": //usrChoice = "2";
+                case "2":
                     System.out.println("What file do you want to download?");
                     String path = usrChoice.next();
                     System.out.println("Where do you want to save the downloaded file?");
@@ -125,7 +118,7 @@ public class Client {
                         e.printStackTrace();
                     }
                     break;
-                case "3": //usrChoice = "3";
+                case "3":
                     System.out.println("Would you like to view the files on the remote server first?");
                     System.out.println("Yes . . . . . . . . . . . (1)");
                     System.out.println("No . . . . . . . . . . .  (2)");
@@ -146,7 +139,7 @@ public class Client {
                     }
 
                     break;
-                case "4": //usrChoice = "4";
+                case "4":
                     try {
                         makeDir.execute(client);
                     } catch (IOException e) {
@@ -154,7 +147,6 @@ public class Client {
                     }
                     break;
                 case "5":
-                    //THIS IS ACTUALLY REMOTE
                     try {
                         removeDir.execute(client);
                     } catch (IOException e) {
@@ -162,7 +154,6 @@ public class Client {
                     }
                     break;
                 case "6":
-                    //WORKING REMOVES REMOTE
                     try {
                         delDirRemote.execute(client);
                     } catch (IOException e) {
@@ -190,51 +181,14 @@ public class Client {
                         e.printStackTrace();
                     }
                     break;
-                default: //usrChoice = "Invalid Match";
+                default:
                     System.out.println("Invalid option.  Please select a valid option");
                     break;
             }
 
         }while(!choice.equals("9"));
-
-
         System.out.println("Exiting the program");
-
-
-        //try {
-        //    addFile.execute(client);
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //}
-        //try {
-        //    delFile.execute(client);
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //}
-
-        /*
-        try {
-            makeDir.execute(client);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            if(!client.isConnected()){
-                client.connect(host, port);
-            }
-            listDir.execute(client);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            client.logout();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-*/
     }
-
 
 
 
@@ -254,25 +208,6 @@ public class Client {
         }
     }
 
-
-
-    public String getCommand(){
-        String command = "";
-
-        return command;
-    }
-
-    public void processComand(String op){
-
-    }
-
-    public void showOptions(){
-
-    }
-
-    public void quit(){
-        // disconnect
-    }
 
 
 
