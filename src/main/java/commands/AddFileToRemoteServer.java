@@ -25,15 +25,8 @@ public class AddFileToRemoteServer implements Command {
         String name_file = null;
         boolean uploaded = false;
 
-
-
-
         System.out.println("Enter the path of the file, include file name :");
         filepath = input.nextLine();
-/*
-        System.out.println("please enter the name of the new file:");
-        name_file = input.nextLine();
-*/
 
         File new_file = new File(filepath);
 
@@ -50,13 +43,6 @@ public class AddFileToRemoteServer implements Command {
             System.out.println("Invalid filename");
             return;
         }
-/*
-        FileInputStream inputStream = new FileInputStream(new_file);
-        boolean uploaded = client.storeFile(fname_file, inputStream);
-
-        String serverReply = client.getReplyString();
-        System.out.println(serverReply);
-*/
 
         if (uploaded) {
             System.out.println(" Success");
