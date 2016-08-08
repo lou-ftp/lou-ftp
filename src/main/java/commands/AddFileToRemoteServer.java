@@ -45,7 +45,7 @@ public class AddFileToRemoteServer implements Command {
         }
 
         if (uploaded) {
-            System.out.println(" Success");
+            System.out.println("Success");
         }
         else {
             System.out.println("failure");
