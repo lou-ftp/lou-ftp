@@ -126,9 +126,9 @@ public class Client {
                     break;
                 case "2":
                     System.out.println("What file do you want to download?");
-                    String path = usrChoice.nextLine();
+                    String path = usrChoice.next();
                     System.out.println("Where do you want to save the downloaded file?");
-                    String save = usrChoice.nextLine();
+                    String save = usrChoice.next();
                     try {
                         getFile.execute(client, path, save);
                     } catch (IOException e) {
@@ -219,9 +219,9 @@ public class Client {
                 case "9":
                     try {
                         System.out.println("What file do you want to change permissions on?");
-                        String trgetPath = usrChoice.nextLine();
+                        String trgetPath = usrChoice.next();
                         System.out.println("What permission mask do you want to use (e.g. 777)");
-                        String mod = usrChoice.nextLine();
+                        String mod = usrChoice.next();
                         new CommandChangePermissions().execute(client, trgetPath, mod);
                     } catch (IOException e) {
                         e.printStackTrace();
