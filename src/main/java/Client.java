@@ -7,7 +7,10 @@ import commands.*;
 import org.apache.commons.net.ftp.FTPClient;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Client {
@@ -26,7 +29,7 @@ public class Client {
     static CommandLogoff logOff = new CommandLogoff();
     static DeleteDirectoryonRemoteServer delDirRemote = new DeleteDirectoryonRemoteServer();
     static CommandGetFile getFile = new CommandGetFile();
-    static CommandGetMultiple getMulti = new CommandGetMultiple();
+    static CommandBatchUploadFiles batchUpload = new CommandBatchUploadFiles();
 
     static String testLogin = "lou-ftp";
     static String testPassword = "lou-ftp";
@@ -36,6 +39,8 @@ public class Client {
     static String password = "";
     static String host ="";
     static int port = 0;
+
+    private static final Pattern STRING_SPLIT_PATTERN = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"|'([^']*)'\n");
 
 
     /**
@@ -86,6 +91,7 @@ public class Client {
 
         do {
             System.out.println("- - - | Select an option | - - -");
+            System.out.println("Launch Console . . . . . . . . . . (0)");
             System.out.println("List directories . . . . . . . .   (1)");
             System.out.println("Get file . . . . . . . . . . . .   (2)");
             System.out.println("Delete file remotely . .  . . . .  (3)");
@@ -94,12 +100,19 @@ public class Client {
             System.out.println("Remove Directory remotely . . . .  (6)");
             System.out.println("Add a file to remote . . . . . . . (7)");
             System.out.println("Add multiple file to remote  . . . (8)");
-            System.out.println("Log off .  . . . . . . . . . . . . (9)");
+            System.out.println("Change file permission . . . . . . (9)");
+            System.out.println("Log off .  . . . . . . . . . . . . (10)");
 
             choice = usrChoice.next();
 
             switch (choice) {
-
+                case "0":
+                    try {
+                        new CommandConsole().execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
                 case "1":
                     try {
                         listDir.execute(client);
@@ -109,9 +122,9 @@ public class Client {
                     break;
                 case "2":
                     System.out.println("What file do you want to download?");
-                    String path = usrChoice.next();
+                    String path = usrChoice.nextLine();
                     System.out.println("Where do you want to save the downloaded file?");
-                    String save = usrChoice.next();
+                    String save = usrChoice.nextLine();
                     try {
                         getFile.execute(client, path, save);
                     } catch (IOException e) {
@@ -169,12 +182,36 @@ public class Client {
                     break;
                 case "8":
                     try {
-                        getMulti.execute(client);
+                        System.out.println("Please supply a list of files you wish to upload separated by spaces (use quotes for paths containing spaces)");
+                        String paths = usrChoice.nextLine();
+                        Matcher m = STRING_SPLIT_PATTERN.matcher(paths);
+                        LinkedList<String> matches = new LinkedList<>();
+                        while (m.find()) {
+                            if (m.group(1) != null) {
+                                matches.add(m.group(1));
+                            } else if (m.group(2) != null) {
+                                matches.add(m.group(2));
+                            } else {
+                                // Add unquoted word
+                                matches.add(m.group());
+                            }
+                        }
+                        batchUpload.execute(client, matches.toArray(new String[matches.size()]));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
                 case "9":
+                    try {
+                        System.out.println("What file do you want to change permissions on?");
+                        String trgetPath = usrChoice.nextLine();
+                        System.out.println("What permission mask do you want to use (e.g. 777)");
+                        String mod = usrChoice.nextLine();
+                        new CommandChangePermissions().execute(client, trgetPath, mod);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                case "10":
                     try {
                         logOff.execute(client);
                     } catch (IOException e) {

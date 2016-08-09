@@ -12,6 +12,7 @@ import java.util.Scanner;
  * Created by Simone on 07/23/16.
  * Refactored by Sara
  * Dan - Modified filepath to be entire path including file. Did some refactoring
+ * Andrew - aded ability to pass file path in as argument
  */
 public class AddFileToRemoteServer implements Command {
 
@@ -24,9 +25,12 @@ public class AddFileToRemoteServer implements Command {
         String filepath = null;
         String name_file = null;
         boolean uploaded = false;
-
-        System.out.println("Enter the path of the file, include file name :");
-        filepath = input.nextLine();
+        if (args[0] == null) {
+            System.out.println("Enter the path of the file, include file name :");
+            filepath = input.nextLine();
+        } else {
+            filepath = args[0];
+        }
 
         File new_file = new File(filepath);
 
