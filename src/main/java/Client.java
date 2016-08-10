@@ -247,7 +247,7 @@ public class Client {
                     break;
             }
 
-        } while(!choice.equals("10"));
+        } while(!choice.equals("11"));
         System.out.println("Exiting the program");
     }
 
