@@ -25,7 +25,7 @@ public class AddFileToRemoteServer implements Command {
         String filepath = null;
         String name_file = null;
         boolean uploaded = false;
-        if (args[0] == null) {
+        if (args == null || args.length < 1) {
             System.out.println("Enter the path of the file, include file name :");
             filepath = input.nextLine();
         } else {
