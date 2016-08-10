@@ -111,7 +111,7 @@ public class Client {
                     try {
                         new CommandConsole().execute(client);
                     } catch (IOException e) {
-                        //e.printStackTrace();
+                        e.printStackTrace();
                         System.out.println("Unable to launch console, please try again. ");
 
                     }
@@ -199,7 +199,7 @@ public class Client {
                 case "8":
                     try {
                         System.out.println("Please supply a list of files you wish to upload separated by spaces (use quotes for paths containing spaces)");
-                        String paths = usrChoice.nextLine();
+                        String paths = usrChoice.next();
                         Matcher m = STRING_SPLIT_PATTERN.matcher(paths);
                         LinkedList<String> matches = new LinkedList<>();
                         while (m.find()) {
