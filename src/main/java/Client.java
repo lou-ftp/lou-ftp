@@ -24,7 +24,7 @@ public class Client {
     static AddFileToRemoteServer addFile = new AddFileToRemoteServer();
     static CommandListDirectories listDir = new CommandListDirectories();
     static CommandMkDir makeDir = new CommandMkDir();
-    static CommandRmDir removeDir = new CommandRmDir();
+    //static CommandRmDir removeDir = new CommandRmDir();
     static CommandDeleteFile delFile = new CommandDeleteFile();
     static CommandLogoff logOff = new CommandLogoff();
     static DeleteDirectoryonRemoteServer delDirRemote = new DeleteDirectoryonRemoteServer();
@@ -37,7 +37,7 @@ public class Client {
     static int testPort = 21;
     static String login = "";
     static String password = "";
-    static String host ="";
+    static String host = "";
     static int port = 0;
 
     private static final Pattern STRING_SPLIT_PATTERN = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"|'([^']*)'\n");
@@ -45,7 +45,8 @@ public class Client {
 
     /**
      * Processes the initial user menu and user input.
-     * @param args  list of command line arguments
+     *
+     * @param args list of command line arguments
      */
     public static void main(String[] args) {
 
@@ -96,13 +97,13 @@ public class Client {
             System.out.println("Get file . . . . . . . . . . . .   (2)");
             System.out.println("Delete file remotely . .  . . . .  (3)");
             System.out.println("Make Directory .  . . . . . . . .  (4)");
-            System.out.println("Remove Directory locally . . . . . (5)");
-            System.out.println("Remove Directory remotely . . . .  (6)");
-            System.out.println("Add a file to remote . . . . . . . (7)");
-            System.out.println("Add multiple file to remote  . . . (8)");
-            System.out.println("Change file permission . . . . . . (9)");
-            System.out.println("Retrieve multiple files . . . . . .(10)");
-            System.out.println("Log off .  . . . . . . . . . . . . (11)");
+            // System.out.println("Remove Directory locally . . . . . (5)");
+            System.out.println("Remove Directory remotely . . . .  (5)");
+            System.out.println("Add a file to remote . . . . . . . (6)");
+            System.out.println("Add multiple file to remote  . . . (7)");
+            System.out.println("Change file permission . . . . . . (8)");
+            System.out.println("Retrieve multiple files . . . . . .(9)");
+            System.out.println("Log off .  . . . . . . . . . . . . (10)");
 
             choice = usrChoice.next();
 
@@ -172,22 +173,13 @@ public class Client {
                     break;
                 case "5":
                     try {
-                        removeDir.execute(client);
-                    } catch (IOException e) {
-                        //e.printStackTrace();
-                        System.out.println("Unable to remove directory locally, please try again. ");
-
-                    }
-                    break;
-                case "6":
-                    try {
                         delDirRemote.execute(client);
                     } catch (IOException e) {
                         //e.printStackTrace();
                         System.out.println("Unable to remove directory remotely, please try again. ");
                     }
                     break;
-                case "7":
+                case "6":
                     try {
                         addFile.execute(client);
                     } catch (IOException e) {
@@ -196,7 +188,7 @@ public class Client {
 
                     }
                     break;
-                case "8":
+                case "7":
                     try {
                         System.out.println("Please supply a list of files you wish to upload separated by spaces (use quotes for paths containing spaces)");
                         String paths = usrChoice.next();
@@ -217,7 +209,7 @@ public class Client {
                         e.printStackTrace();
                     }
                     break;
-                case "9":
+                case "8":
                     try {
                         System.out.println("What file do you want to change permissions on?");
                         String trgetPath = usrChoice.next();
@@ -228,14 +220,14 @@ public class Client {
                         e.printStackTrace();
                     }
                     break;
-                case "10":
+                case "9":
                     try {
                         new CommandGetMultiple().execute(client);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
-                case "11":
+                case "10":
                     try {
                         logOff.execute(client);
                     } catch (IOException e) {
@@ -247,19 +239,20 @@ public class Client {
                     break;
             }
 
-        } while(!choice.equals("11"));
+        } while (!choice.equals("10"));
         System.out.println("Exiting the program");
     }
 
 
-
-    public static void login(){
+    public static void login() {
         try {
             connectFtp.execute(client, new String[]{host, String.valueOf(port), login, password});
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
     public static void testLogin(){
         try {
@@ -269,120 +262,7 @@ public class Client {
         }
     }
 
-
-
-
-    // **************   TESTING ************** //
-
-    private static void run_Tests() {
-        System.out.println("Starting tests....  \n");
-
-        test_LoginSuccess();    // command -- CommandLogin()
-        //test_LoginSuccess();   // command -- CommandLogin()
-        //test_LoginFail();    // command -- CommandLogin()
-
-        test_listDirectories();
-
-        //TODO - mk dir code puts in current directory user is in on the server
-        //test_mkDir();    // command -- CommandMkDir();
-
-        //TODO - rm dir code puts in current directory user is in on the server
-        test_removeDir();   // command -- CommandRmDir();  //(String pathname)
-
-        //TODO - Simone added a file "DeleteDirectoryOnRemoteServer"
-        // TODO      -- which asks the user for a specific path and file name...
-
-
-        test_listDirectories();
-
-       //test_addFile();    // command -- AddFileToRemoteServer();
-
-        test_Logoff();    // command -- CommandLogoff()
-
-    }
-
-    private static void test_LoginSuccess() {
-        System.out.println("\nloginSuccess... ");
-
-        try {
-            connectFtp.execute(client, new String[]{testHost, String.valueOf(testPort), testLogin, testPassword});
-        } catch (IOException e) {
-            //e.printStackTrace();
-        }
-    }
-
-    private static void test_LoginFail() {
-        System.out.println("\nloginFail... \n");
-        String badLogin = "aaa";
-
-        try {
-            connectFtp.execute(client, new String[]{testHost, String.valueOf(testPort), badLogin, testPassword});
-        } catch (IOException e) {
-            //e.printStackTrace();
-        }
-    }
-
-    private static void test_Logoff() {
-        System.out.println("\ntest_Logoff...");
-
-        try {
-            disconnectFTP.execute(client);
-        } catch (IOException e) {
-            System.err.println("failed logout " + e.getMessage() + "\n");
-            //e.printStackTrace();
-        }
-    }
-
-    private static void test_listDirectories() {
-        System.out.println("\ntest_listDirectories...");
-
-        try {
-            listDir.execute(client);
-        } catch (IOException e) {
-            System.err.println("failed list directories " + e.getMessage() + "\n");
-            //e.printStackTrace();
-        }
-    }
-
-    private static void test_addFile() {
-        System.out.println("\ntest_add file...");   // command -- AddFileToRemoteServer();
-
-        try {
-            addFile.execute(client);
-        } catch (IOException e) {
-            System.err.println("failed addfile " + e.getMessage() + "\n");
-            //e.printStackTrace();
-        }
-
-    }
-
-    private static void test_mkDir() {
-        System.out.println("\ntest_make directory...");   // command -- CommandMkDir();
-
-        String dirName = "myDirectory";  // TODO - How will we handle the user input for mk dir?
-
-        try {
-            makeDir.execute(client, dirName);
-        } catch (IOException e) {
-            System.err.println("failed mkDir " + e.getMessage() + "\n");
-            //e.printStackTrace();
-        }
-
-    }
-
-    private static void test_removeDir() {
-        System.out.println("\ntest_remove directory...");   // command -- CommandRmDir();
-
-        String dirName = "myDirectory";  // TODO - How will we handle the user input for REMOVE dir?
-                                         // TODO - How do we handle removing non-empty directories?
-
-        try {
-            removeDir.execute(client, dirName);
-        } catch (IOException e) {
-            System.err.println("test_remove directory - Failed " + e.getMessage() + "\n");
-            //e.printStackTrace();
-        }
-
-    }
-
 }
+
+
+
