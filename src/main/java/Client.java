@@ -101,7 +101,8 @@ public class Client {
             System.out.println("Add a file to remote . . . . . . . (7)");
             System.out.println("Add multiple file to remote  . . . (8)");
             System.out.println("Change file permission . . . . . . (9)");
-            System.out.println("Log off .  . . . . . . . . . . . . (10)");
+            System.out.println("Retrieve multiple files . . . . . .(10)");
+            System.out.println("Log off .  . . . . . . . . . . . . (11)");
 
             choice = usrChoice.next();
 
@@ -211,7 +212,15 @@ public class Client {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    break;
                 case "10":
+                    try {
+                        new CommandGetMultiple().execute(client);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "11":
                     try {
                         logOff.execute(client);
                     } catch (IOException e) {
