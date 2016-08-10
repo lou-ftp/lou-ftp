@@ -90,7 +90,7 @@ public class Client {
         }
 
         do {
-            System.out.println("- - - | Select an option | - - -");
+            System.out.println("- - - - | Select an option | - - - - -");
             System.out.println("Launch Console . . . . . . . . . . (0)");
             System.out.println("List directories . . . . . . . .   (1)");
             System.out.println("Get file . . . . . . . . . . . .   (2)");
@@ -111,25 +111,30 @@ public class Client {
                     try {
                         new CommandConsole().execute(client);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        System.out.println("Unable to launch console, please try again. ");
+
                     }
                     break;
                 case "1":
                     try {
                         listDir.execute(client);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        System.out.println("Unable to list directories, please try again. ");
+
                     }
                     break;
                 case "2":
                     System.out.println("What file do you want to download?");
-                    String path = usrChoice.nextLine();
+                    String path = usrChoice.next();
                     System.out.println("Where do you want to save the downloaded file?");
-                    String save = usrChoice.nextLine();
+                    String save = usrChoice.next();
                     try {
                         getFile.execute(client, path, save);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        System.out.println("Unable to get file, please try again. ");
                     }
                     break;
                 case "3":
@@ -143,13 +148,16 @@ public class Client {
                         try {
                             listDir.execute(client);
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            //e.printStackTrace();
+                            System.out.println("Unable to list file, please try again. ");
                         }
                     }
                     try {
                         delFile.execute(client);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        System.out.println("Unable to delete file remotely, please try again. ");
+
                     }
 
                     break;
@@ -157,28 +165,35 @@ public class Client {
                     try {
                         makeDir.execute(client);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        System.out.println("Unable to make a directory, please try again. ");
+
                     }
                     break;
                 case "5":
                     try {
                         removeDir.execute(client);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        System.out.println("Unable to remove directory locally, please try again. ");
+
                     }
                     break;
                 case "6":
                     try {
                         delDirRemote.execute(client);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        System.out.println("Unable to remove directory remotely, please try again. ");
                     }
                     break;
                 case "7":
                     try {
                         addFile.execute(client);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        System.out.println("Unable to add file to remote, please try again. ");
+
                     }
                     break;
                 case "8":
@@ -205,9 +220,9 @@ public class Client {
                 case "9":
                     try {
                         System.out.println("What file do you want to change permissions on?");
-                        String trgetPath = usrChoice.nextLine();
+                        String trgetPath = usrChoice.next();
                         System.out.println("What permission mask do you want to use (e.g. 777)");
-                        String mod = usrChoice.nextLine();
+                        String mod = usrChoice.next();
                         new CommandChangePermissions().execute(client, trgetPath, mod);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -232,7 +247,7 @@ public class Client {
                     break;
             }
 
-        }while(!choice.equals("9"));
+        } while(!choice.equals("10"));
         System.out.println("Exiting the program");
     }
 
