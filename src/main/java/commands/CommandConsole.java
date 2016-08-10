@@ -44,6 +44,7 @@ public class CommandConsole implements Command {
                 for (String s1 : commands.keySet()) {
                     System.out.println(" - " + s1);
                 }
+                continue;
             }
             LinkedList<String> matches = new LinkedList<>();
             Matcher m = STRING_SPLIT_PATTERN.matcher(cmdString);
