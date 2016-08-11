@@ -97,13 +97,13 @@ public class Client {
             System.out.println("Get file . . . . . . . . . . . .   (2)");
             System.out.println("Delete file remotely . .  . . . .  (3)");
             System.out.println("Make Directory .  . . . . . . . .  (4)");
-            // System.out.println("Remove Directory locally . . . . . (5)");
-            System.out.println("Remove Directory remotely . . . .  (5)");
-            System.out.println("Add a file to remote . . . . . . . (6)");
-            System.out.println("Add multiple file to remote  . . . (7)");
-            System.out.println("Change file permission . . . . . . (8)");
-            System.out.println("Retrieve multiple files . . . . . .(9)");
-            System.out.println("Log off .  . . . . . . . . . . . . (10)");
+            System.out.println("List files locally . . . . . . . . (5)");
+            System.out.println("Remove Directory remotely . . . .  (6)");
+            System.out.println("Add a file to remote . . . . . . . (7)");
+            System.out.println("Add multiple file to remote  . . . (8)");
+            System.out.println("Change file permission . . . . . . (9)");
+            System.out.println("Retrieve multiple files . . . . . .(10)");
+            System.out.println("Log off .  . . . . . . . . . . . . (11)");
 
             choice = usrChoice.next();
 
@@ -171,7 +171,16 @@ public class Client {
 
                     }
                     break;
-                case "5":
+                case "5": {
+                    try {
+                        System.out.println("What directory do you want to list?");
+                        String dirPath = usrChoice.next();
+                        new CommandListLocal().execute(client, dirPath);
+                    } catch (IOException e) {
+                        System.out.println("Unable to list local directory, please try again");
+                    }
+                }
+                case "6":
                     try {
                         delDirRemote.execute(client);
                     } catch (IOException e) {
@@ -179,7 +188,7 @@ public class Client {
                         System.out.println("Unable to remove directory remotely, please try again. ");
                     }
                     break;
-                case "6":
+                case "7":
                     try {
                         addFile.execute(client);
                     } catch (IOException e) {
@@ -188,7 +197,7 @@ public class Client {
 
                     }
                     break;
-                case "7":
+                case "8":
                     try {
                         System.out.println("Please supply a list of files you wish to upload separated by spaces (use quotes for paths containing spaces)");
                         String paths = usrChoice.next();
@@ -209,7 +218,7 @@ public class Client {
                         e.printStackTrace();
                     }
                     break;
-                case "8":
+                case "9":
                     try {
                         System.out.println("What file do you want to change permissions on?");
                         String trgetPath = usrChoice.next();
@@ -220,14 +229,14 @@ public class Client {
                         e.printStackTrace();
                     }
                     break;
-                case "9":
+                case "10":
                     try {
                         new CommandGetMultiple().execute(client);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
-                case "10":
+                case "11":
                     try {
                         logOff.execute(client);
                     } catch (IOException e) {
@@ -239,7 +248,7 @@ public class Client {
                     break;
             }
 
-        } while (!choice.equals("10"));
+        } while (!choice.equals("11"));
         System.out.println("Exiting the program");
     }
 

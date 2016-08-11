@@ -22,6 +22,7 @@ public class CommandConsole implements Command {
         commands.put("delete", new CommandDeleteFile());
         commands.put("get", new CommandGetFile());
         commands.put("multiget", new CommandGetMultiple());
+        commands.put("ls", new CommandListDirectories());
         commands.put("list", new CommandListDirectories());
         commands.put("login", new CommandLogin());
         commands.put("logoff", new CommandLogoff());
@@ -63,7 +64,11 @@ public class CommandConsole implements Command {
             if (!commands.containsKey(cmd.toLowerCase())) {
                 System.out.println("Invalid command!");
             } else {
-                commands.get(cmd.toLowerCase()).execute(client, delegatedArgs);
+                try {
+                    commands.get(cmd.toLowerCase()).execute(client, delegatedArgs);
+                } catch (Exception e) {
+                    System.out.println("Error in command, are you sure you supplied the correct arguments?");
+                }
             }
         }
     }

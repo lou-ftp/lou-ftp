@@ -9,7 +9,7 @@ public class CommandChangePermissions implements Command {
         if (client.sendSiteCommand("chmod " + args[0] + " " + args[1])) {
             System.out.println(client.getReplyString());
         } else {
-            System.out.println(client.getReplyString());
+            System.out.println(client.getReplyString() + " Note: chmod is only supported on unix based ftp servers");
         }
     }
 }
